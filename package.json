@@ -1,0 +1,20 @@
+{
+	"name": "ghost-theme-boilerplate",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"prepare": "husky install"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@biomejs/biome": "1.4.1",
+		"@commitlint/cli": "18.4.3",
+		"@commitlint/config-conventional": "18.4.3",
+		"lint-staged": "15.2.0",
+		"prettier": "3.1.1",
+		"husky": "^8.0.0"
+	}
+}
