@@ -4,8 +4,15 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"dev": "node utils/scripts/watchfiles.mjs",
+		"build:js": "node utils/scripts/esbuild.build.mjs",
+		"build:css": "node utils/scripts/postcss.build.mjs",
+		"zip": "node scripts/create-zip.mjs"
 	},
+	"browserslist": [
+		"defaults"
+	],
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
@@ -13,8 +20,19 @@
 		"@biomejs/biome": "1.4.1",
 		"@commitlint/cli": "18.4.3",
 		"@commitlint/config-conventional": "18.4.3",
+		"archiver": "^6.0.1",
+		"autoprefixer": "^10.4.16",
+		"chokidar": "^3.5.3",
+		"cssnano": "^6.0.1",
+		"esbuild": "^0.19.9",
+		"glob-to-regexp": "^0.4.1",
+		"husky": "^8.0.0",
+		"is-glob": "^4.0.3",
 		"lint-staged": "15.2.0",
+		"postcss": "^8.4.32",
+		"postcss-import": "^15.1.0",
+		"postcss-load-config": "^5.0.2",
 		"prettier": "3.1.1",
-		"husky": "^8.0.0"
+		"tailwindcss": "3.3.6"
 	}
 }

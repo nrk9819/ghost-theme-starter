@@ -1,0 +1,26 @@
+<html lang="{{@site.locale}}">
+	<head>
+		<title>{{meta_title}}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		{{! Preload scripts }}
+		<link rel="preload" as="style" href="{{asset 'build/styles.css'}}" />
+		<link rel="preload" as="script" href="{{asset 'build/index.js'}}" />
+
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="{{asset 'build/styles.css'}}"
+		/>
+
+		{{ghost_head}}
+
+	</head>
+	<body>
+		<div>
+			{{{body}}}
+		</div>
+		{{ghost_foot}}
+	</body>
+</html>
