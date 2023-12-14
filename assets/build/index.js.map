@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../ts/index.ts"],
-  "sourcesContent": ["interface Foo {\r\n\tname: string;\r\n\tage: number;\r\n\taddress: string;\r\n}\r\n\r\nexport const foo: Foo = {\r\n\tname: \"foo\",\r\n\tage: 20,\r\n\taddress: \"bar\",\r\n};\r\n"],
-  "mappings": "MAMO,IAAMA,EAAW,CACvB,KAAM,MACN,IAAK,GACL,QAAS,KACV",
-  "names": ["foo"]
-}
