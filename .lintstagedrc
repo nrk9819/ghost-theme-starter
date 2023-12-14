@@ -1,1 +1,4 @@
-{}
+{
+    "assets/ts/*": ["biome check --apply", "prettier --write"],
+    "**/*.hbs": "prettier --write",
+}
