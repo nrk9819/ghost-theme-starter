@@ -1,6 +1,4 @@
 {
-  "experimentalTernaries": true,
-  "tabWidth": 4,
-  "useTabs": true,
-  "singleAttributePerLine": true
+	"experimentalTernaries": true,
+	"singleAttributePerLine": true
 }

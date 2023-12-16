@@ -1,1 +1,20 @@
 {{!< default}}
+
+<main>
+  {{#post}}
+    {{#if authors}}
+      <ul>
+        {{#foreach authors}}
+          <li>
+            <a
+              href="{{url}}"
+              title="{{name}}"
+              class="author author-{{id}} {{slug}}"
+            >{{name}}</a>
+          </li>
+        {{/foreach}}
+      </ul>
+    {{/if}}
+    {{content}}
+  {{/post}}
+</main>

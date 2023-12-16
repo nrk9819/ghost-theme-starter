@@ -3,6 +3,7 @@ import path from "path";
 import archiver from "archiver";
 import isGlob from "is-glob";
 import globToRegex from "glob-to-regexp";
+import { readJson } from "../functions/read-json.mjs";
 
 /**
  * Parses a .gitignore file and returns an array of patterns.
@@ -11,23 +12,21 @@ import globToRegex from "glob-to-regexp";
  * @returns {string[]} An array of patterns from the .gitignore file.
  */
 function parseGitignore(filePath) {
-	try {
-		const content = fs.readFileSync(filePath, "utf-8");
+  try {
+    const content = fs.readFileSync(filePath, "utf-8");
 
-		const lines = content.split("\n");
+    const lines = content.split("\n");
 
-		const patterns = lines.filter((line) => {
-			const trimmedLine = line.trim();
-			return trimmedLine !== "" && !trimmedLine.startsWith("#");
-		});
+    const patterns = lines.filter((line) => {
+      const trimmedLine = line.trim();
+      return trimmedLine !== "" && !trimmedLine.startsWith("#");
+    });
 
-		return patterns.map((pattern) =>
-			pattern.replace(/(\/\r|\r|\\|\/)$/, ""),
-		);
-	} catch (e) {
-		console.error("Error reading .gitignore file:", e);
-		return [];
-	}
+    return patterns.map((pattern) => pattern.replace(/(\/\r|\r|\\|\/)$/, ""));
+  } catch (e) {
+    console.error("Error reading .gitignore file:", e);
+    return [];
+  }
 }
 
 /**
@@ -38,45 +37,49 @@ function parseGitignore(filePath) {
  * @returns
  */
 function shouldIgnore(path, gitignorePatterns) {
-	return gitignorePatterns.some((pattern) => {
-		if (isGlob(pattern)) {
-			return globToRegex(pattern).test(path);
-		}
-		return pattern === path;
-	});
+  return gitignorePatterns.some((pattern) => {
+    if (isGlob(pattern)) {
+      return globToRegex(pattern).test(path);
+    }
+    return pattern === path;
+  });
 }
 
 const sourceDir = "./";
-const outputZip = path.resolve(path.dirname(process.cwd()), "output.zip");
+const outputFileName = readJson("package.json").name;
+const outputZip = path.resolve(
+  path.dirname(process.cwd()),
+  `${outputFileName}.zip`,
+);
 
 const gitignore = parseGitignore(".gitignore");
 
 const output = fs.createWriteStream(outputZip);
 const archive = archiver("zip", {
-	zlib: { level: 9 },
+  zlib: { level: 9 },
 });
 
 archive.pipe(output);
 
 const files = fs.readdirSync(sourceDir, { withFileTypes: true });
 for (const file of files) {
-	const filePath = `${file.path}${file.name}`;
-	if (!shouldIgnore(file.name, gitignore) && file.name !== ".git") {
-		if (file.isFile()) {
-			archive.file(filePath, { name: file.name });
-		}
-		if (file.isDirectory()) {
-			archive.directory(filePath, file.name);
-		}
-	}
+  const filePath = `${file.path}${file.name}`;
+  if (!shouldIgnore(file.name, gitignore) && file.name !== ".git") {
+    if (file.isFile()) {
+      archive.file(filePath, { name: file.name });
+    }
+    if (file.isDirectory()) {
+      archive.directory(filePath, file.name);
+    }
+  }
 }
 
 archive.finalize();
 
 archive.on("end", () => {
-	console.info(`Archive "${outputZip}" created successfully.`);
+  console.info(`Archive "${outputZip}" created successfully.`);
 });
 
 archive.on("error", (err) => {
-	console.error("Error creating the archive:", err);
+  console.error("Error creating the archive:", err);
 });

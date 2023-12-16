@@ -1,26 +1,19 @@
 <html lang="{{@site.locale}}">
-	<head>
-		<title>{{meta_title}}</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <title>{{meta_title}}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		{{! Preload scripts }}
-		<link rel="preload" as="style" href="{{asset 'build/screen.css'}}" />
-		<link rel="preload" as="script" href="{{asset 'build/index.js'}}" />
+    {{! Preload scripts }}
+    <link rel="preload" as="style" href="{{asset 'build/screen.css'}}" />
 
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="{{asset 'build/screen.css'}}"
-		/>
+    {{ghost_head}}
+  </head>
 
-		{{ghost_head}}
-
-	</head>
-	<body>
-		<div>
-			{{{body}}}
-		</div>
-		{{ghost_foot}}
-	</body>
+  <body>
+    <div>
+      {{{body}}}
+    </div>
+    {{ghost_foot}}
+  </body>
 </html>
