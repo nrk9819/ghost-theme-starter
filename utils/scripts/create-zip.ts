@@ -1,17 +1,18 @@
 import fs from "fs";
 import path from "path";
 import archiver from "archiver";
-import isGlob from "is-glob";
 import globToRegex from "glob-to-regexp";
-import { readJson } from "../functions/read-json.mjs";
+import isGlob from "is-glob";
+import type { PackageJson } from "type-fest";
+import { readJson } from "../functions/read-json";
 
 /**
  * Parses a .gitignore file and returns an array of patterns.
  *
- * @param {string} filePath - The path to the .gitignore file to parse.
- * @returns {string[]} An array of patterns from the .gitignore file.
+ * @param  filePath - The path to the .gitignore file to parse.
+ * @returns - An array of patterns from the .gitignore file.
  */
-function parseGitignore(filePath) {
+function parseGitignore(filePath: string) {
   try {
     const content = fs.readFileSync(filePath, "utf-8");
 
@@ -36,7 +37,7 @@ function parseGitignore(filePath) {
  * @param {*} gitignorePatterns
  * @returns
  */
-function shouldIgnore(path, gitignorePatterns) {
+function shouldIgnore(path: string, gitignorePatterns: string[]) {
   return gitignorePatterns.some((pattern) => {
     if (isGlob(pattern)) {
       return globToRegex(pattern).test(path);
@@ -46,7 +47,9 @@ function shouldIgnore(path, gitignorePatterns) {
 }
 
 const sourceDir = "./";
-const outputFileName = readJson("package.json").name;
+const outputFileName =
+  readJson<PackageJson, "package.json">("package.json")?.name ??
+  "ghost-theme-boilerplate";
 const outputZip = path.resolve(
   path.dirname(process.cwd()),
   `${outputFileName}.zip`,
