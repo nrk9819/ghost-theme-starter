@@ -1,5 +1,0 @@
-{
-    "**/*.ts": ["tsc --noEmit --esModuleInterop", "biome check --apply", "prettier --write"],
-    "**/*.hbs": "prettier --write",
-    "assets/styles/**/*.css": "prettier --write"
-}

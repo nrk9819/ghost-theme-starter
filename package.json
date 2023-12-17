@@ -52,6 +52,15 @@
     "build:css": "ts-node utils/scripts/postcss.build.ts",
     "zip": "ts-node utils/scripts/create-zip.ts"
   },
+  "lint-staged": {
+    "**/*.ts": [
+      "tsc --noEmit --esModuleInterop",
+      "biome check --apply",
+      "prettier --write"
+    ],
+    "**/*.hbs": "prettier --write",
+    "assets/styles/**/*.css": "prettier --write"
+  },
   "devDependencies": {
     "@biomejs/biome": "1.4.1",
     "@commitlint/cli": "18.4.3",
