@@ -7,7 +7,9 @@ import type { ConfigContext } from "postcss-load-config";
  * Function to compile and write css into files based on postcss config
  * @param env - type of target environment, default is set to "build"
  */
-export async function compileCss(env = "build"): Promise<void> {
+export async function compileCss(
+  env: "build" | "watch" = "build",
+): Promise<void> {
   const ctx: ConfigContext = {
     env,
   };
